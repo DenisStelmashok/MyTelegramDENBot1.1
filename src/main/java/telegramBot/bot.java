@@ -31,24 +31,12 @@ public class bot extends TelegramLongPollingBot {
         }
     }
 
-    /**
-     * Формирование имени пользователя
-     *
-     * @param msg сообщение
-     */
     private String getUserName(Message msg) {
         User user = msg.getFrom();
         String userName = user.getUserName();
         return (userName != null) ? userName : String.format("%s %s", user.getLastName(), user.getFirstName());
     }
 
-    /**
-     * Отправка ответа
-     *
-     * @param chatId   id чата
-     * @param userName имя пользователя
-     * @param text     текст ответа
-     */
     private void setAnswer(Long chatId, String userName, String text) {
         SendMessage answer = new SendMessage();
         answer.setText(text);
@@ -58,12 +46,10 @@ public class bot extends TelegramLongPollingBot {
             execute(answer);
         } catch (TelegramApiException e) {
             e.printStackTrace();
-            //логируем сбой Telegram Bot API, используя userName
         }
     }
 
     public void onUpdateReceived(Update update) {
-        SendMessage answerw = new SendMessage();
         Model model = new Model();
         Message msg = update.getMessage();
         Message city = update.getMessage();
@@ -75,7 +61,10 @@ public class bot extends TelegramLongPollingBot {
             String answer = "Дорогой " + userName + Weather.getWeather(city.getText(), model);
             setAnswer(chatId, userName, answer);
         } catch (IOException e) {
-            String answer = "Дорогой ";
+            Throwable e1=e;
+            while(e1.getCause()!=null){e1=e1.getCause();}
+            String answer = "Дорогой "+ userName + " случилась беда "+ e1.getMessage();
+            setAnswer(chatId, userName, answer);
         }
     }
 
