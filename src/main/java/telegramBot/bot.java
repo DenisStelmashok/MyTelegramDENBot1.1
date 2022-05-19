@@ -67,22 +67,6 @@ public class bot extends TelegramLongPollingBot {
             setAnswer(chatId, userName, answer);
         }
     }
-
-    /**
-     * public void sendMsg (Message message, String text){
-     * SendMessage sendMessage = new SendMessage();
-     * //Model model = new Model();
-     * sendMessage.enableMarkdown(true);
-     * sendMessage.setChatId(message.getChatId().toString());
-     * sendMessage.setReplyToMessageId(message.getMessageId());
-     * sendMessage.setText(text);
-     * setButtons(sendMessage);
-     * //setButtons(sendMessage);
-     * //sendMessage(sendMessage);
-     * //sendMsg(message, Weather.getWeather(message.getText(), model));
-     * }
-     */
-
     public void setButtons(SendMessage sendMessage) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
